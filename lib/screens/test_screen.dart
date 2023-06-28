@@ -68,6 +68,14 @@ class _TestScreenState extends State<TestScreen> {
                           ),
                         ),
                         Text(
+                          '${state.loadedWeather.list?[0].temp?.day?.ceil()}ºC'
+                              .toUpperCase(),
+                          style: const TextStyle(
+                            fontSize: 50.0,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        Text(
                           '${state.loadedWeather.list?[0].weather![0].description}'
                               .toUpperCase(),
                           style: const TextStyle(
