@@ -45,15 +45,16 @@ class _TestScreenState extends State<TestScreen> {
                 ),
                 onChanged: (value) {
                   cityName = value;
+                  weatherBloc.add(WeatherLoadEvent(cityName: cityName));
                 },
               ),
             ),
-            TextButton(
+            /* TextButton(
               child: const Text('Click Me!'),
               onPressed: () {
                 weatherBloc.add(WeatherLoadEvent(cityName: cityName));
               },
-            ),
+            ),*/
             BlocBuilder<WeatherBloc, WeatherState>(
               builder: (context, state) {
                 if (state is WeatherLoadedState) {
