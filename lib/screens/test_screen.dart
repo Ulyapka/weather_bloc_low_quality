@@ -4,14 +4,19 @@ import 'package:weather_clean_arch/bloc/weather_bloc.dart';
 import 'package:weather_clean_arch/bloc/weather_event.dart';
 import 'package:weather_clean_arch/bloc/weather_state.dart';
 
-late String globalCityName;
-
-class TestScreen extends StatelessWidget {
+class TestScreen extends StatefulWidget {
   const TestScreen({super.key});
 
   @override
+  State<TestScreen> createState() => _TestScreenState();
+}
+
+class _TestScreenState extends State<TestScreen> {
+  String? cityName;
+
+  @override
   Widget build(BuildContext context) {
-    final WeatherBloc _weatherBloc = BlocProvider.of<WeatherBloc>(context);
+    final WeatherBloc weatherBloc = BlocProvider.of<WeatherBloc>(context);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -39,23 +44,38 @@ class TestScreen extends StatelessWidget {
                   ),
                 ),
                 onChanged: (value) {
-                  globalCityName = value;
+                  cityName = value;
                 },
               ),
             ),
             TextButton(
               child: const Text('Click Me!'),
               onPressed: () {
-                _weatherBloc.add(WeatherLoadEvent());
+                weatherBloc.add(WeatherLoadEvent(cityName: cityName));
               },
             ),
             BlocBuilder<WeatherBloc, WeatherState>(
               builder: (context, state) {
                 if (state is WeatherLoadedState) {
                   return Center(
-                    child: Text(
-                      '${state.loadedWeather.list?[0].temp?.day}',
-                      style: const TextStyle(fontSize: 50.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          cityName!.toUpperCase(),
+                          style: const TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          '${state.loadedWeather.list?[0].weather![0].description}'
+                              .toUpperCase(),
+                          style: const TextStyle(
+                            fontSize: 40.0,
+                            color: Colors.black54,
+                          ),
+                        ),
+                      ],
                     ),
                   );
                 }

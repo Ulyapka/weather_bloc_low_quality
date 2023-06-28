@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_clean_arch/api/weather_api.dart';
 import 'package:weather_clean_arch/bloc/weather_event.dart';
@@ -11,9 +13,9 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     on<WeatherLoadEvent>((event, emit) async {
       emit(WeatherLoadingState());
       try {
-        final WeatherForecast loadedWeather =
-            await weatherRepository.fetchWeatherForecast();
-        print(loadedWeather.list?[0].temp?.day);
+        final WeatherForecast loadedWeather = await weatherRepository
+            .fetchWeatherForecast(event.cityName ?? 'Moscow');
+        log(loadedWeather.list![0].temp!.day.toString());
         emit(WeatherLoadedState(loadedWeather: loadedWeather));
       } catch (_) {
         emit(WeatherErrorState());

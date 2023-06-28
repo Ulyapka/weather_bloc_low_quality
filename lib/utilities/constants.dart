@@ -1,4 +1,5 @@
 class Constants {
+  // TODO: че за нейминги через большую букву?
   static const String WEATHER_APP_ID = '1369dd6b5ae78fc9952261ab9aa236b4';
   static const String WEATHER_BASE_SCHEME = 'https://';
   static const String WEATHER_BASE_URL_DOMAIN = 'api.openweathermap.org';
