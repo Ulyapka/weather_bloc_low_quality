@@ -4,19 +4,13 @@ import 'package:weather_clean_arch/bloc/weather_bloc.dart';
 import 'package:weather_clean_arch/bloc/weather_event.dart';
 import 'package:weather_clean_arch/bloc/weather_state.dart';
 
-class TestScreen extends StatefulWidget {
+class TestScreen extends StatelessWidget {
   const TestScreen({super.key});
-
-  @override
-  State<TestScreen> createState() => _TestScreenState();
-}
-
-class _TestScreenState extends State<TestScreen> {
-  String? cityName;
 
   @override
   Widget build(BuildContext context) {
     final WeatherBloc weatherBloc = BlocProvider.of<WeatherBloc>(context);
+    weatherBloc.add(WeatherLoadEvent(cityName: ''));
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -25,10 +19,18 @@ class _TestScreenState extends State<TestScreen> {
               padding: const EdgeInsets.all(20.0),
               child: TextField(
                 cursorColor: Colors.blueGrey[800],
-                style: const TextStyle(color: Colors.white),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 17.0,
+                  fontWeight: FontWeight.w300,
+                ),
                 decoration: const InputDecoration(
                   hintText: 'Введите название города',
-                  hintStyle: TextStyle(color: Colors.white),
+                  hintStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 17.0,
+                    fontWeight: FontWeight.w300,
+                  ),
                   filled: true,
                   fillColor: Colors.black54,
                   border: OutlineInputBorder(
@@ -38,14 +40,13 @@ class _TestScreenState extends State<TestScreen> {
                     borderSide: BorderSide.none,
                   ),
                   icon: Icon(
-                    Icons.location_city,
+                    Icons.search_outlined,
                     color: Colors.black54,
                     size: 50.0,
                   ),
                 ),
                 onChanged: (value) {
-                  cityName = value;
-                  weatherBloc.add(WeatherLoadEvent(cityName: cityName));
+                  weatherBloc.add(WeatherLoadEvent(cityName: value));
                 },
               ),
             ),
@@ -62,10 +63,10 @@ class _TestScreenState extends State<TestScreen> {
                     child: Column(
                       children: [
                         Text(
-                          cityName!.toUpperCase(),
+                          '${state.loadedWeather.city?.name}',
                           style: const TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 40.0,
+                            fontWeight: FontWeight.w300,
                           ),
                         ),
                         Text(
@@ -80,9 +81,10 @@ class _TestScreenState extends State<TestScreen> {
                           '${state.loadedWeather.list?[0].weather![0].description}'
                               .toUpperCase(),
                           style: const TextStyle(
-                            fontSize: 40.0,
-                            color: Colors.black54,
-                          ),
+                              fontSize: 40.0,
+                              color: Colors.black54,
+                              fontWeight: FontWeight.w300),
+                          textAlign: TextAlign.center,
                         ),
                       ],
                     ),
