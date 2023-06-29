@@ -6,7 +6,7 @@ import 'package:weather_clean_arch/utilities/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:weather_clean_arch/utilities/location.dart';
 
-class WeatherApi {
+class WeatherDataSource {
   Future<WeatherForecast> fetchWeatherForecast(String cityName) async {
     Map<String, String>? parameters;
 

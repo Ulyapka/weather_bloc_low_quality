@@ -13,10 +13,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     on<WeatherLoadEvent>((event, emit) async {
       emit(WeatherLoadingState());
       try {
-        final WeatherForecast loadedWeather = await weatherRepository
-            .getWeatherApi()
-            .fetchWeatherForecast(event.cityName ?? 'Moscow');
-        log(loadedWeather.list![0].temp!.day.toString());
+        final WeatherForecast loadedWeather =
+            await weatherRepository.getWeather(event.cityName ?? 'Moscow');
         emit(WeatherLoadedState(loadedWeather: loadedWeather));
       } catch (_) {
         emit(WeatherErrorState());
